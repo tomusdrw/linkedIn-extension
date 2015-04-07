@@ -1,6 +1,6 @@
 'use strict';
 (function() {
-    var name = document.querySelector('.full-name');
+    var name = document.querySelector('.member-name');
     var plusModal = false;
     var previewModal = false;
     var taggle = null;
@@ -18,7 +18,7 @@
         var button = document.createElement('button');
         button.textContent = '+';
         button.addEventListener('click', showPlusModal);
-        name.parentNode.appendChild(button);
+        name.appendChild(button);
     };
     var editPerson = function(e) {
         e.preventDefault();
@@ -29,7 +29,6 @@
         Profile.tags = taggle.getTags().values;
         Profile.added = true;
         Storage.setProfile(Profile, function(res) {
-            console.log(res);
             plusModal.classList.remove('show');
         });
     };
@@ -50,6 +49,17 @@
             plusModal.classList.remove('show');
         });
     };
+
+    function safe$(selector, prop) {
+
+        var $item = document.querySelector(selector);
+        if ($item) {
+            return $item[prop];
+        }
+
+        return null;
+    }
+
     var Profile = {
         id: null,
         img:null,
@@ -63,18 +73,18 @@
     };
     var setProfile = function(data) {
         if (!data) {
-            Profile.name = document.querySelector(NAME_EL).textContent;
-            Profile.city = document.querySelector(LOCAL_EL).textContent;
-            Profile.img = document.querySelector(IMG_EL).src;
+            Profile.name = safe$(NAME_EL, 'textContent');
+            Profile.city = safe$(LOCAL_EL, 'textContent');
+            Profile.img = safe$(IMG_EL, 'src');
         } else {
             Profile = data;
         }
     };
     var init = function() {
-        var profileId = window.location.search.match(/id=(\d+)/)[1];
+        var profileId = extractProfileId(window.location.href);
         Profile.id = profileId;
+        console.log(Profile.id);
         Storage.getProfile(profileId, function(res) {
-            console.log(res);
             setProfile(res);
             getTemplates().then(propagateTemplates).then(attachTemplateEvents);
             addPlusButton();

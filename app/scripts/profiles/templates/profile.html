@@ -1,19 +1,26 @@
 
 <div class="row">
-    <img src="{{profile.img}}" alt="" class="circle col s3">
-    <div class="col s9">
-        <h2 class="title">{{profile.name}}</h2>
-        <p><a href="mailto:{{profile.email}}">{{profile.email}}</a></p>
-        <p>City:    {{profile.city}} </p>
-        <p>Status: {{profile.status}} </p>
+    <img ng-src="{{profile.img}}" style="width:120px" alt="" class="col">
+    <div class="col">
+        <h5 class="title" style="margin-top: 0px;"><a href="https://www.linkedin.com/sales/profile/{{profile.id}},BMin,NAME_SEARCH" target="_blank">{{profile.name}}</a><span style="font-size: 14px;">, {{profile.city}}</span></h5>
         <ul>
-        <li ng-repeat="tag in profile.tags" class="tag">
-            <button class="{{tag}}" ng-click="updateStatus(profile)">{{tag}}</button>
-        </li>
-    </ul>
-    <p>
-    {{profile.comment}}
-    </p>
+        <span ng-repeat="tag in profile.tags" class="tag" style="padding:6px 6px; background-color: #bbb; margin: 0px 10px 0px 0px">{{tag}}</span>
+        </ul>        
+        <p style="font-size: 12px;">Email: <a href="mailto:{{profile.email}}">{{profile.email}}</a></p>
+        <p><a href="https://github.com/search?utf8=%E2%9C%93&q={{profile.name}}&type=Users&ref=searchresults" target="_new">Find GitHub</a></p>
+        <p><a href="https://mail.google.com/mail/?view=cm&fs=1&su=SUBJECT&body=BODY&bcc={{profile.email}}" target="_new">Write mail</a></p>
+        <p>{{profile.status}}</p>
+
+        <p>
+        {{profile.comment}}
+        </p> 
+    </div>
 </div>
-<a href="#!" class="secondary-content"><i class="mdi-action-grade"></i></a>
+<div class="row">
+    <hr/> 
 </div>
+
+
+<!--
+    <button class="{{tag}}" ng-click="updateStatus(profile)">{{tag}}</button>
+-->

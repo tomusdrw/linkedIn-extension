@@ -9,7 +9,7 @@ angular.module('App').factory('Profiles', function($q) {
                         resArr.push(res.profiles[i])
                     }
                     deferred.resolve(resArr);
-                } else deferred.rejest('no-profiles');
+                } else deferred.reject('no-profiles');
             });
             return deferred.promise;
         }

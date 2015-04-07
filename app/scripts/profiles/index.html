@@ -13,14 +13,17 @@
                 </div>
             </div>
             <ul>
-                <li ng-repeat="profile in profiles | filter:searchText" class="collection-item avatar srwe">
+                <li ng-repeat="profile in filteredProfiles" class="collection-item avatar srwe">
             	   <profile  profile="profile"></profile>
                 </li>
             </ul>
+
+            <button class="waves-effect waves-light btn" ng-click="backupContent()">Backup content</button>
         </div>
         <script type="text/javascript" src="../libs/jquery/dist/jquery.min.js"></script>
         <script src="../libs/materialize/dist/js/materialize.min.js"></script>
         <script src="../libs/angular/angular.min.js"></script>
+         <script src="../libs/lodash/lodash.min.js"></script>
         <script src="app.js"></script>
         <script src="directives.js"></script>
         <script src="services.js"></script>
