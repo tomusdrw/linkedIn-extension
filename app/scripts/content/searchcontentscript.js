@@ -32,7 +32,7 @@
 
     function findPersonById(personId) {
         return new Promise(function(resolve, reject) {
-            chrome.storage.sync.get('profiles', function(res) {
+            chrome.storage.local.get('profiles', function(res) {
                 if (!res.profiles) {
                     return reject('no-profiles');
                 }

@@ -1,6 +1,6 @@
-angular.module('App').controller('ProfilesCtrl', function($scope, Profiles, $filter) {
-	$scope.profiles = [];
-	$scope.searchText = "";
+angular.module('App').controller('ProfilesCtrl', function($scope, Profiles, $filter, $window) {
+  $scope.profiles = [];
+  $scope.searchText = "";
 
   var filtr = $filter('filter');
 
@@ -10,7 +10,7 @@ angular.module('App').controller('ProfilesCtrl', function($scope, Profiles, $fil
     var people = parts.map(function(part) {
       return filtr($scope.profiles, part);
     });
-    
+
     $scope.filteredProfiles = _.intersection.apply(_, people);
   }
 
@@ -18,22 +18,35 @@ angular.module('App').controller('ProfilesCtrl', function($scope, Profiles, $fil
   $scope.$watch('profiles', filterProfiles);
 
 
-	 Profiles.getAll().then(function(profiles){
-		$scope.profiles = profiles;
-	});
+  Profiles.getAll().then(function(profiles) {
+    $scope.profiles = profiles;
+  });
 
-   $scope.backupContent = function() {
 
-      var blob = new Blob([JSON.stringify(angular.copy($scope.profiles), null, 2)], {
-        type: 'application/json'
+  $scope.backup = {};
+
+  $scope.restore = function() {
+    try {
+      Profiles.setProfiles(JSON.parse($scope.backup.data)).then(function(){
+        $window.alert('Restored!');
+        $window.location.reload();
       });
+    } catch (e) {
+      $window.alert(e);
+    }
+  };
+  $scope.backupContent = function() {
 
-      var downloadLink = document.createElement("a");
-      downloadLink.download = 'people.json';
-      downloadLink.innerHTML = "Download File";
-      downloadLink.href = URL.createObjectURL(blob);
+    var blob = new Blob([JSON.stringify(angular.copy($scope.profiles), null, 2)], {
+      type: 'application/json'
+    });
 
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-   };
+    var downloadLink = document.createElement("a");
+    downloadLink.download = 'people.json';
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = URL.createObjectURL(blob);
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+  };
 });
