@@ -7,6 +7,8 @@
         <span ng-repeat="tag in profile.tags" class="tag" style="padding:6px 6px; background-color: #bbb; margin: 0px 10px 0px 0px">{{tag}}</span>
         </ul>        
         <p style="font-size: 12px;">Email: <a href="mailto:{{profile.email}}">{{profile.email}}</a></p>
+        <p>Created: {{profile.createdAt | date:'short' }}</p>
+        <p>Updated: {{profile.updatedAt | date:'short' }}
         <p><a href="https://github.com/search?utf8=%E2%9C%93&q={{profile.name}}&type=Users&ref=searchresults" target="_new">Find GitHub</a></p>
         <p><a href="https://mail.google.com/mail/?view=cm&fs=1&su=SUBJECT&body=BODY&bcc={{profile.email}}" target="_new">Write mail</a></p>
         <p>{{profile.status}}</p>

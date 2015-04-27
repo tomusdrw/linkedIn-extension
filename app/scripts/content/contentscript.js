@@ -30,6 +30,7 @@
         Profile.added = true;
         Storage.setProfile(Profile, function(res) {
             plusModal.classList.remove('show');
+            propagateTemplates();
         });
     };
     var propagateTemplates = function() {
@@ -76,6 +77,7 @@
             Profile.name = safe$(NAME_EL, 'textContent');
             Profile.city = safe$(LOCAL_EL, 'textContent');
             Profile.img = safe$(IMG_EL, 'src');
+            Profile.createdAt = new Date().getTime();
         } else {
             Profile = data;
         }

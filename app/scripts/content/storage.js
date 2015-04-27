@@ -14,6 +14,7 @@ var Storage = {
         chrome.storage.local.get('profiles', function(res) {
             if(!res.profiles)
                 res.profiles = {};
+            profile.updatedAt = new Date().getTime();
         	res.profiles[profile.id] = profile;
             chrome.storage.local.set({'profiles':res.profiles}, function() {
                 callback(true);  

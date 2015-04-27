@@ -4,11 +4,7 @@ angular.module('App').factory('Profiles', function($q) {
       var deferred = $q.defer();
       chrome.storage.local.get('profiles', function(res) {
         if (res.profiles) {
-          var resArr = [];
-          for (var i in res.profiles) {
-            resArr.push(res.profiles[i]);
-          }
-          deferred.resolve(resArr);
+          deferred.resolve(_.values(res.profiles));
         } else {
           deferred.reject('no-profiles');
         }
@@ -17,9 +13,15 @@ angular.module('App').factory('Profiles', function($q) {
     },
 
     setProfiles: function(profiles) {
-      var deferred = $q.defer();
+      var deferred = $q.defer();      
+
+      var prof = {};
+      profiles.map(function(profile){
+        prof[profile.id] = profile;
+      });
+
       chrome.storage.local.set({
-        profiles: profiles
+        profiles: prof
       }, function(res) {
         deferred.resolve(res);
       });
